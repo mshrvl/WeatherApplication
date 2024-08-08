@@ -1,14 +1,14 @@
 package com.example.weatherapplication.data.entity.rds
 
-import com.example.weatherapplication.data.entity.entity.Weather
+import com.example.weatherapplication.data.entity.entity.WeatherDay
 
-class RemoteDataSource (val weatherApi: WeatherApi) {
+class RemoteDataSource (private val weatherApi: WeatherApi) {
 
     // step 3 - get data from web/retrofit
-    suspend fun getInsult(): Weather {
+    suspend fun getWeatherDay(): WeatherDay {
         return weatherApi.getWeather(
-            latitude = 52.52F,
-            longitude = 13.41F,
+            latitude = 52.52,
+            longitude = 13.41,
         )
     }
 }
