@@ -1,4 +1,6 @@
 package com.example.weatherapplication.screens.firstscreen
 
-class ViewModelFirstScreen {
+import androidx.lifecycle.ViewModel
+
+class ViewModelFirstScreen: ViewModel() {
 }

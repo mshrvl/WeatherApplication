@@ -7,9 +7,12 @@ import retrofit2.http.Query
 
 interface WeatherApi {
 
-    @GET ("https://api.open-meteo.com/v1/forecast")
-    suspend fun getWeather (
-        @Query ("latitude") latitude: Double,
-        @Query ("longitude") longitude: Double,
-    ) : WeatherDay
+    @GET("https://api.open-meteo.com/v1/forecast")
+    suspend fun getWeatherDaily(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double,
+        @Query("hourly") hourly: Array<String>,
+        @Query("timezone") timezone: String
+
+    ): WeatherDay
 }
