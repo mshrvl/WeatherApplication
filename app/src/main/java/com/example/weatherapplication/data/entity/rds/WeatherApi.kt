@@ -13,6 +13,5 @@ interface WeatherApi {
         @Query("longitude") longitude: Double,
         @Query("hourly") hourly: Array<String>,
         @Query("timezone") timezone: String
-
     ): WeatherDay
 }

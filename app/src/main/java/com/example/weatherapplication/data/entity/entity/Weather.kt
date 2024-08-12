@@ -6,3 +6,9 @@ data class WeatherDay(
     val hourly: Array<String>,
     val timezone: String
 )
+
+data class WeatherWeekly(
+    val latitude: Double,
+    val longitude: Double,
+    val timezone: String
+)

@@ -23,8 +23,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.example.weatherapplication.R
 import com.example.weatherapplication.ui.theme.WeatherApplicationTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WeatherCard(
@@ -32,8 +34,10 @@ fun WeatherCard(
     title: String,
     value: String,
     supportText: String,
-    image: ImageVector
+    image: ImageVector,
+
 ) {
+
     Row(
         modifier = modifier
             .background(color = Color.White, shape = RoundedCornerShape(6.dp)),

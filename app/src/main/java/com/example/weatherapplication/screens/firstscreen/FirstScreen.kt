@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -20,9 +21,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherapplication.R
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun FirstScreen() {
+fun FirstScreen(
+    viewModel: ViewModelFirstScreen
+) {
+    val result by viewModel.dailyData
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color.Blue.copy(alpha = 0.4f))) {
