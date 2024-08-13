@@ -1,16 +1,21 @@
 package com.example.weatherapplication.data.entity.rds
 
-import com.example.weatherapplication.data.entity.entity.WeatherDay
+import com.example.weatherapplication.data.entity.entity.WeatherResponse
 
 class RemoteDataSource(private val weatherApi: WeatherApi) {
 
-    // step 3 - get data from web/retrofit
-    suspend fun getWeatherDay(): WeatherDay {
-        return weatherApi.getWeatherDaily(
+    suspend fun getWeatherCurrent(): WeatherResponse? {
+        val response = weatherApi.getWeatherDaily(
             latitude = 52.52,
             longitude = 13.41,
-            hourly = arrayOf("temperature_2m,rain,pressure_msl,surface_pressure,wind_speed_10m, uv_index,is_day"),
-            timezone = "Europe%2FMoscow"
+            hourly = listOf("temperature_2m", "is_day", "rain", "surface_pressure"),
+            timezone = "Europe/Moscow"
         )
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+
+        }
+        return null
     }
 }

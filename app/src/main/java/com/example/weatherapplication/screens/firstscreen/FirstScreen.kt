@@ -20,16 +20,18 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherapplication.R
+import org.koin.androidx.compose.koinViewModel
 
-//@Preview(showBackground = true)
 @Composable
 fun FirstScreen(
-    viewModel: ViewModelFirstScreen
+    viewModel: ViewModelFirstScreen = koinViewModel()
 ) {
     val result by viewModel.dailyData
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Blue.copy(alpha = 0.4f))) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Blue.copy(alpha = 0.4f))
+    ) {
         Text(text = "Current conditions", modifier = Modifier.statusBarsPadding())
         Row(
             modifier = Modifier
@@ -41,8 +43,8 @@ fun FirstScreen(
                 modifier = Modifier
                     .weight(1f)
                     .height(160.dp),
-                title = "Pressure",
-                value = "15/C",
+                title = "Temperature",
+                value = result?.currentWeather?.temperature.toString(),
                 supportText = "Light",
                 image = ImageVector.vectorResource(R.drawable.baseline_cloudy_snowing_24)
             )
@@ -51,8 +53,10 @@ fun FirstScreen(
                 modifier = Modifier
                     .weight(1f)
                     .height(160.dp),
-                title = "Sallas",
-                value = "22 km/h",
+                title = "Wind Speed",
+                value = if (result?.currentWeather?.windSpeed == 0.0) {
+                    "No wind"
+                } else result?.currentWeather?.windSpeed.toString(),
                 supportText = "Support",
                 image = ImageVector.vectorResource(R.drawable.baseline_sunny_24)
             )
@@ -67,9 +71,9 @@ fun FirstScreen(
                 modifier = Modifier
                     .weight(1f)
                     .height(160.dp),
-                title = "Kollen",
-                value = "34",
-                supportText = "Jaba",
+                title = "Pressure",
+                value = result?.currentWeather?.surfacePressure.toString(),
+                supportText = "",
                 image = ImageVector.vectorResource(R.drawable.baseline_sunny_24)
             )
             Spacer(modifier = Modifier.width(4.dp))
@@ -77,9 +81,9 @@ fun FirstScreen(
                 modifier = Modifier
                     .weight(1f)
                     .height(160.dp),
-                title = "Alexey",
-                value = "30cm",
-                supportText = "BigCock",
+                title = "Day or Night",
+                value = result?.currentWeather?.isDay.toString(),
+                supportText = "sample data",
                 image = ImageVector.vectorResource(R.drawable.baseline_cloudy_snowing_24)
             )
         }

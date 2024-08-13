@@ -1,26 +1,26 @@
 package com.example.weatherapplication.screens.firstscreen
 
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapplication.data.entity.entity.WeatherDay
-import com.example.weatherapplication.data.entity.rds.WeatherApi
+import com.example.weatherapplication.data.entity.entity.WeatherResponse
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ViewModelFirstScreen(private val repository: WeatherRepository) : ViewModel() {
     val data = repository.getCurrentConditions()
+    var dailyData = mutableStateOf<WeatherResponse?>(null)
 
-    var dailyData = mutableStateOf<WeatherDay?>(null)
-
-    fun getDailyData() {
+    private fun getDailyData() {
         viewModelScope.launch {
-            dailyData.value = repository.getWeatherDay()
-
+            delay(5000)
+            dailyData.value = repository.getWeatherCurrent()
         }
     }
 
+    init {
+        getDailyData()
+    }
 
 }
