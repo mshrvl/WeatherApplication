@@ -8,13 +8,18 @@ class RemoteDataSource(private val weatherApi: WeatherApi) {
         val response = weatherApi.getWeatherDaily(
             latitude = 52.52,
             longitude = 13.41,
-            hourly = listOf("temperature_2m", "is_day", "rain", "surface_pressure"),
-            timezone = "Europe/Moscow"
+            hourly = listOf(
+                "temperature_2m",
+                "is_day",
+                "rain",
+                "surface_pressure",
+                "wind_speed_10m"
+            ),
+            timezone = "Europe/Moscow",
+            daily = listOf("sunrise", "sunset")
         )
         if (response.isSuccessful) {
             return response.body()
-        } else {
-
         }
         return null
     }

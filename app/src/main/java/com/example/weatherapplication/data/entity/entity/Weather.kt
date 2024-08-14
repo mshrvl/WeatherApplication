@@ -19,12 +19,13 @@ data class CurrentWeather(
     val temperature: Double,
     @SerializedName("is_day")
     val isDay: Int,
+
     val rain: Int,
     @SerializedName("weather_code")
     val weatherCode: Int,
     @SerializedName("surface_pressure")
     val surfacePressure: Double,
-    @SerializedName("wind_speed")
+    @SerializedName("wind_speed_10m")
     val windSpeed: Double
 )
 

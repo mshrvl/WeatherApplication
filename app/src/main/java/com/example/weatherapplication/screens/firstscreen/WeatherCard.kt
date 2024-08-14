@@ -1,10 +1,8 @@
 package com.example.weatherapplication.screens.firstscreen
 
-import android.content.res.Resources.Theme
-import android.health.connect.datatypes.units.Temperature
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,20 +11,32 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
+import androidx.compose.ui.unit.sp
 import com.example.weatherapplication.R
 import com.example.weatherapplication.ui.theme.WeatherApplicationTheme
-import org.koin.androidx.compose.koinViewModel
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.fade
+import com.google.accompanist.placeholder.placeholder
+
+@Composable
+fun Modifier.basePlaceholder(visible: Boolean) = this.placeholder(
+    visible = visible,
+    color = MaterialTheme.colorScheme.secondary,
+    highlight = PlaceholderHighlight.fade(MaterialTheme.colorScheme.tertiary),
+    shape = RoundedCornerShape(4.dp)
+)
 
 @Composable
 fun WeatherCard(
@@ -36,17 +46,17 @@ fun WeatherCard(
     supportText: String,
     image: ImageVector,
 
-) {
+    ) {
 
     Row(
         modifier = modifier
-            .background(color = Color.White, shape = RoundedCornerShape(6.dp)),
+            .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
 
         ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = title)
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = value)
+            Text(modifier = Modifier.basePlaceholder(true), text = value, fontSize = 30.sp)
             Text(text = supportText)
         }
 

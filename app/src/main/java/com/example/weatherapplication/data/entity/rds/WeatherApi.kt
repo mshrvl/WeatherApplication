@@ -12,6 +12,7 @@ interface WeatherApi {
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
         @Query("current") hourly: List<String>,
-        @Query("timezone") timezone: String
+        @Query("timezone") timezone: String,
+        @Query("daily") daily:List<String>
     ):Response<WeatherResponse>
 }

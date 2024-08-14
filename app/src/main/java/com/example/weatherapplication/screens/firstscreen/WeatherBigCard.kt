@@ -23,36 +23,36 @@ import com.example.weatherapplication.R
 import com.example.weatherapplication.ui.theme.WeatherApplicationTheme
 
 @Composable
-fun WeatherBigCard(modifier: Modifier = Modifier) {
+fun WeatherBigCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    sunriseTime: String,
+    sunsetTime: String,
+    image: ImageVector
+) {
     Column(modifier = modifier.background(color = Color.White, shape = RoundedCornerShape(6.dp))) {
-        Text(modifier = Modifier.padding(16.dp), text = "Sunrise & Sunset")
+        Text(modifier = Modifier.padding(16.dp), text = title)
 
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         Row {
 
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(text = "Sunrise")
-                Text(text = "12:00")
+                Text(text = sunriseTime)
                 Spacer(modifier = Modifier.padding(16.dp))
                 Text(text = "Sunset")
-                Text(text = "21:00")
+                Text(text = sunsetTime)
             }
-            Image(modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .size(120.dp)
-                .padding(end = 16.dp)
-                .weight(1f),
-                imageVector = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
+            Image(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .size(120.dp)
+                    .padding(end = 16.dp)
+                    .weight(1f),
+                imageVector = image,
                 contentDescription = null
             )
         }
     }
 }
 
-@Preview
-@Composable
-fun WeatherBigCardPreview() {
-    WeatherApplicationTheme {
-        WeatherBigCard()
-    }
-}
