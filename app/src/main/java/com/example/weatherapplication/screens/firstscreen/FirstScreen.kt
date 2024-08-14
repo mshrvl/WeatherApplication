@@ -52,7 +52,7 @@ fun FirstScreen(
             WeatherCard(
                 modifier = Modifier
                     .weight(1f)
-                    .height     (160.dp),
+                    .height(160.dp),
                 title = "Wind Speed",
                 value = if (result?.currentWeather?.windSpeed == 0.0) {
                     "No wind"
@@ -82,12 +82,14 @@ fun FirstScreen(
                     .weight(1f)
                     .height(160.dp),
                 title = "Day or Night",
-                value = if (result?.currentWeather?.isDay == 1) {
-                    "Day"
-                } else {
-                    "Night"
+                value = when (result?.currentWeather?.isDay) {
+                    1 -> "Day"
+                    0 -> "Night"
+                    else -> {
+                        "null"
+                    }
                 },
-                supportText = "sample data",
+                supportText = "",
                 image = ImageVector.vectorResource(R.drawable.baseline_cloudy_snowing_24)
             )
         }

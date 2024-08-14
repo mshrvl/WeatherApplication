@@ -56,7 +56,7 @@ fun WeatherCard(
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = title)
             Spacer(modifier = Modifier.height(16.dp))
-            Text(modifier = Modifier.basePlaceholder(true), text = value, fontSize = 30.sp)
+            Text(modifier = Modifier.basePlaceholder(value == "null" || value == "null°С"), text = value, fontSize = 30.sp)
             Text(text = supportText)
         }
 
