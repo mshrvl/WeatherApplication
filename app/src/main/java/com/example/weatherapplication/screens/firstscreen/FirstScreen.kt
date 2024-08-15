@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherapplication.R
 import org.koin.androidx.compose.koinViewModel
@@ -95,9 +94,14 @@ fun FirstScreen(
         }
         Spacer(modifier = Modifier.padding(4.dp))
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            //WeatherBigCard()
+            WeatherBigCard(
+                title = "Sunrise & sunset",
+                image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
+                sunsetTime = result?.sunrisesSunset?.sunset?.firstOrNull().toString(),
+                sunriseTime = result?.sunrisesSunset?.sunrise?.firstOrNull().toString()
+            )
             Spacer(modifier = Modifier.padding(4.dp))
-            //WeatherBigCard()
+
         }
     }
 }

@@ -29,6 +29,7 @@ import com.example.weatherapplication.ui.theme.WeatherApplicationTheme
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.fade
 import com.google.accompanist.placeholder.placeholder
+import org.intellij.lang.annotations.Pattern
 
 @Composable
 fun Modifier.basePlaceholder(visible: Boolean) = this.placeholder(
@@ -44,7 +45,7 @@ fun WeatherCard(
     title: String,
     value: String,
     supportText: String,
-    image: ImageVector,
+    image: ImageVector
 
     ) {
 
@@ -56,7 +57,11 @@ fun WeatherCard(
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = title)
             Spacer(modifier = Modifier.height(16.dp))
-            Text(modifier = Modifier.basePlaceholder(value == "null" || value == "null°С"), text = value, fontSize = 30.sp)
+            Text(
+                modifier = Modifier.basePlaceholder(value == "null" || value == "null°С"),
+                text = value,
+                fontSize = 30.sp
+            )
             Text(text = supportText)
         }
 

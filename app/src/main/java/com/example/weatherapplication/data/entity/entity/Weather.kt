@@ -10,7 +10,9 @@ data class WeatherResponse(
     val longitude: Double,
     val timezone: String,
     @SerializedName("current")
-    val currentWeather: CurrentWeather
+    val currentWeather: CurrentWeather,
+    @SerializedName("daily")
+    val sunrisesSunset: Daily
 )
 
 data class CurrentWeather(
@@ -19,14 +21,18 @@ data class CurrentWeather(
     val temperature: Double,
     @SerializedName("is_day")
     val isDay: Int,
-
     val rain: Int,
     @SerializedName("weather_code")
     val weatherCode: Int,
     @SerializedName("surface_pressure")
     val surfacePressure: Double,
     @SerializedName("wind_speed_10m")
-    val windSpeed: Double
+    val windSpeed: Double,
+)
+
+data class Daily(
+    val sunset: List<String>,
+    val sunrise: List<String>
 )
 
 data class WeatherWeekly(
