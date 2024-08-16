@@ -14,7 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun WeatherBigCard(
@@ -22,7 +24,8 @@ fun WeatherBigCard(
     title: String,
     sunriseTime: String,
     sunsetTime: String,
-    image: ImageVector
+    image: ImageVector,
+    placeholderVisible: Boolean
 ) {
     Column(modifier = modifier.background(color = Color.White, shape = RoundedCornerShape(16.dp))) {
         Text(modifier = Modifier.padding(16.dp), text = title)
@@ -32,10 +35,10 @@ fun WeatherBigCard(
 
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(text = "Sunrise")
-                Text(modifier = Modifier.basePlaceholder(sunsetTime == "null"), text = sunriseTime)
+                Text(modifier = Modifier.basePlaceholder(placeholderVisible), text = sunriseTime, fontSize = 30.sp)
                 Spacer(modifier = Modifier.padding(16.dp))
                 Text(text = "Sunset")
-                Text(modifier = Modifier.basePlaceholder(sunriseTime == "null"), text = sunsetTime)
+                Text(modifier = Modifier.basePlaceholder(placeholderVisible), text = sunsetTime, fontSize = 30.sp)
             }
             Image(
                 modifier = Modifier

@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
@@ -45,7 +46,8 @@ fun WeatherCard(
     title: String,
     value: String,
     supportText: String,
-    image: ImageVector
+    image: ImageVector,
+    placeholderVisible: Boolean
 
     ) {
 
@@ -54,13 +56,14 @@ fun WeatherCard(
             .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
 
         ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(16.dp).weight(1f)) {
             Text(text = title)
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                modifier = Modifier.basePlaceholder(value == "null" || value == "null°С"),
+                modifier = Modifier.basePlaceholder(placeholderVisible),
                 text = value,
-                fontSize = 30.sp
+                fontSize = 25.sp,
+                maxLines = 1
             )
             Text(text = supportText)
         }
@@ -68,10 +71,51 @@ fun WeatherCard(
         Image(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(16.dp)
-                .weight(1f)
+                .padding(end = 16.dp)
+                .size(48.dp)
                 .aspectRatio(1f),
             imageVector = image,
+            contentDescription = null
+        )
+
+    }
+}
+
+@Composable
+fun WeatherCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    value: String,
+    supportText: String,
+    image: Painter,
+    placeholderVisible: Boolean
+
+) {
+
+    Row(
+        modifier = modifier
+            .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
+
+        ) {
+        Column(modifier = Modifier.padding(16.dp).weight(1f)) {
+            Text(text = title)
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                modifier = Modifier.basePlaceholder(placeholderVisible),
+                text = value,
+                fontSize = 25.sp,
+                maxLines = 1
+            )
+            Text(text = supportText)
+        }
+
+        Image(
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .padding(end = 16.dp)
+                .size(48.dp)
+                .aspectRatio(1f),
+            painter = image,
             contentDescription = null
         )
 
@@ -89,7 +133,9 @@ fun WeatherCardPreview() {
             supportText = "Light",
             image = ImageVector.vectorResource(
                 R.drawable.baseline_sunny_24
-            )
+            ),
+            placeholderVisible = true
+
         )
     }
 }

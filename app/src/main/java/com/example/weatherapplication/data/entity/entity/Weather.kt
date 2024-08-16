@@ -2,6 +2,8 @@ package com.example.weatherapplication.data.entity.entity
 
 import android.health.connect.datatypes.units.Temperature
 import com.example.weatherapplication.data.entity.rds.WeatherApi
+import com.example.weatherapplication.screens.firstscreen.formatTime
+import com.example.weatherapplication.screens.firstscreen.getFormattedTime
 import com.google.gson.annotations.SerializedName
 
 
@@ -13,7 +15,21 @@ data class WeatherResponse(
     val currentWeather: CurrentWeather,
     @SerializedName("daily")
     val sunrisesSunset: Daily
-)
+) {
+    fun getFirstDaySunrise(): String? {
+        this.sunrisesSunset.sunrise.firstOrNull()?.let {
+            return formatTime(it)?.getFormattedTime()
+        }
+        return null
+    }
+
+    fun getFirstDaySunset(): String? {
+        this.sunrisesSunset.sunset.firstOrNull()?.let {
+            return formatTime(it)?.getFormattedTime()
+        }
+        return null
+    }
+}
 
 data class CurrentWeather(
     val time: String,
@@ -34,6 +50,7 @@ data class Daily(
     val sunset: List<String>,
     val sunrise: List<String>
 )
+
 
 data class WeatherWeekly(
     val latitude: Double,

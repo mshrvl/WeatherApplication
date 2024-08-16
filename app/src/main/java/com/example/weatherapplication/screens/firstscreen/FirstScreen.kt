@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.weatherapplication.R
@@ -25,7 +27,7 @@ import org.koin.androidx.compose.koinViewModel
 fun FirstScreen(
     viewModel: ViewModelFirstScreen = koinViewModel()
 ) {
-    val result by viewModel.dailyData
+    val result by viewModel.dailyData.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -43,9 +45,10 @@ fun FirstScreen(
                     .weight(1f)
                     .height(160.dp),
                 title = "Temperature",
-                value = result?.currentWeather?.temperature.toString() + "°С",
+                value = result.temperature + "°С",
                 supportText = "Light",
-                image = ImageVector.vectorResource(R.drawable.baseline_cloudy_snowing_24)
+                image = painterResource(id = R.drawable.thermometer),
+                placeholderVisible = result.isLoading
             )
             Spacer(modifier = Modifier.width(4.dp))
             WeatherCard(
@@ -53,11 +56,10 @@ fun FirstScreen(
                     .weight(1f)
                     .height(160.dp),
                 title = "Wind Speed",
-                value = if (result?.currentWeather?.windSpeed == 0.0) {
-                    "No wind"
-                } else result?.currentWeather?.windSpeed.toString(),
-                supportText = "km/h",
-                image = ImageVector.vectorResource(R.drawable.baseline_sunny_24)
+                value = result.windSpeed,
+                supportText = "m/s",
+                image = painterResource(id = R.drawable.windspeed),
+                placeholderVisible = result.isLoading
             )
         }
         Row(
@@ -71,9 +73,10 @@ fun FirstScreen(
                     .weight(1f)
                     .height(160.dp),
                 title = "Pressure",
-                value = result?.currentWeather?.surfacePressure.toString(),
+                value = result.pressure,
                 supportText = "mBar",
-                image = ImageVector.vectorResource(R.drawable.baseline_sunny_24)
+                image = painterResource(id = R.drawable.pressure),
+                placeholderVisible = result.isLoading
             )
             Spacer(modifier = Modifier.width(4.dp))
             WeatherCard(
@@ -81,30 +84,24 @@ fun FirstScreen(
                     .weight(1f)
                     .height(160.dp),
                 title = "Day or Night",
-                value = when (result?.currentWeather?.isDay) {
-                    1 -> "Day"
-                    0 -> "Night"
-                    else -> {
-                        "null"
-                    }
-                },
+                value = result.dayOrNight,
                 supportText = "",
-                image = ImageVector.vectorResource(R.drawable.baseline_cloudy_snowing_24)
+                image = painterResource(id = R.drawable.day_and_night_icon),
+                placeholderVisible = result.isLoading
             )
         }
         Spacer(modifier = Modifier.padding(4.dp))
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             WeatherBigCard(
                 title = "Sunrise & sunset",
-                image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
-                sunsetTime = result?.sunrisesSunset?.sunset?.firstOrNull().toString(),
-                sunriseTime = result?.sunrisesSunset?.sunrise?.firstOrNull().toString()
+                image = ImageVector.vectorResource(R.drawable.sunrise_icon),
+                sunsetTime = result.sunset,
+                sunriseTime = result.sunrise,
+                placeholderVisible = result.isLoading
             )
             Spacer(modifier = Modifier.padding(4.dp))
 
         }
     }
 }
-
-
 
