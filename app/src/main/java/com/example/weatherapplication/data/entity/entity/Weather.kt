@@ -1,7 +1,5 @@
 package com.example.weatherapplication.data.entity.entity
 
-import android.health.connect.datatypes.units.Temperature
-import com.example.weatherapplication.data.entity.rds.WeatherApi
 import com.example.weatherapplication.screens.firstscreen.formatTime
 import com.example.weatherapplication.screens.firstscreen.getFormattedTime
 import com.google.gson.annotations.SerializedName
