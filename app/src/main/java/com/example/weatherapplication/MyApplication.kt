@@ -5,7 +5,7 @@ import com.example.weatherapplication.data.entity.lds.LocalDataSource
 import com.example.weatherapplication.data.entity.rds.RemoteDataSource
 import com.example.weatherapplication.data.entity.rds.WeatherApi
 import com.example.weatherapplication.screens.firstscreen.ViewModelFirstScreen
-import com.example.weatherapplication.screens.firstscreen.WeatherRepository
+import com.example.weatherapplication.repository.WeatherRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModelOf

@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import com.example.weatherapplication.R
 import com.example.weatherapplication.ui.theme.WeatherApplicationTheme
 
-
 @Composable
 fun DailyInfo(
     modifier: Modifier,
@@ -31,22 +32,22 @@ fun DailyInfo(
     image: ImageVector,
     currentWeather: String
 ) {
-    Row(Modifier.background(color = Color.White)) {
-        Column(modifier = Modifier.fillMaxWidth(1f)) {
+    Row(modifier.background(color = Color.White, shape = RoundedCornerShape(8.dp))) {
+        Column(modifier = Modifier.fillMaxWidth(1f).padding(36.dp)) {
             Row {
-                Text(text = "$dayOfWeek,", fontSize = 8.sp)
-                Spacer(modifier = Modifier.padding(horizontal = 1.dp))
-                Text(text = month, fontSize = 8.sp)
-                Spacer(modifier = Modifier.padding(horizontal = 1.dp))
-                Text(text = number, fontSize = 8.sp)
+                Text(text = "$dayOfWeek,", fontSize = 32.sp)
+                Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+                Text(text = month, fontSize = 32.sp)
+                Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+                Text(text = number, fontSize = 32.sp)
             }
             Row {
-                Text(text = "$maxTemp°/", fontSize = 24.sp)
-                Text(text = "$minTemp°", fontSize = 24.sp)
-                Image(modifier = Modifier.padding(start = 8.dp),imageVector = image, contentDescription = null)
+                Text(text = "$maxTemp°/", fontSize = 40.sp)
+                Text(text = "$minTemp°", fontSize = 40.sp)
+                Image(modifier = Modifier.padding(start = 36.dp).size(48.dp),imageVector = image, contentDescription = null)
             }
             Row {
-                Text(text = currentWeather, fontSize = 8.sp)
+                Text(text = currentWeather, fontSize = 36.sp)
             }
         }
     }
@@ -67,3 +68,5 @@ fun PreviewDailyInfo() {
         )
     }
 }
+
+

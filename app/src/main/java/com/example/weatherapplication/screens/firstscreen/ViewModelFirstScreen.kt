@@ -1,11 +1,9 @@
 package com.example.weatherapplication.screens.firstscreen
 
 
-import android.health.connect.datatypes.units.Temperature
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapplication.data.entity.entity.WeatherResponse
+import com.example.weatherapplication.repository.WeatherRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,6 +1,7 @@
 package com.example.weatherapplication.data.entity.rds
 
 import com.example.weatherapplication.data.entity.entity.WeatherResponse
+import com.example.weatherapplication.data.entity.entity.WeatherWeekly
 
 class RemoteDataSource(private val weatherApi: WeatherApi) {
     suspend fun getWeatherCurrent(): WeatherResponse? {
@@ -21,5 +22,24 @@ class RemoteDataSource(private val weatherApi: WeatherApi) {
             return response.body()
         }
         return null
+    }
+
+    suspend fun getWeatherWeekly(): WeatherWeekly? {
+        val response = weatherApi.getWeatherWeekly(
+            latitude = 59.9386,
+            longitude = 30.3141,
+            timezone = "Europe/Moscow",
+            daily = listOf(
+                "weather_code",
+                "temperature_2m_max",
+                "temperature_2m_min",
+                "precipitation_probability_max"
+            )
+        )
+        if (response.isSuccessful) {
+            return response.body()
+        }
+        return null
+
     }
 }

@@ -25,9 +25,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FirstScreen(
-    viewModel: ViewModelFirstScreen = koinViewModel()
 ) {
+    val viewModel: ViewModelFirstScreen = koinViewModel()
     val result by viewModel.dailyData.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -99,7 +100,7 @@ fun FirstScreen(
                 sunriseTime = result.sunrise,
                 placeholderVisible = result.isLoading
             )
-            Spacer(modifier = Modifier.padding(4.dp))
+           //добавить стрелочки для заката и восхода
 
         }
     }
