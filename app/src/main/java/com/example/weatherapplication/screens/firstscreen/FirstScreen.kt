@@ -95,12 +95,11 @@ fun FirstScreen(
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             WeatherBigCard(
                 title = "Sunrise & sunset",
-                image = ImageVector.vectorResource(R.drawable.sunrise_icon),
+                image = ImageVector.vectorResource(R.drawable.sunset_6wykko949zcr),
                 sunsetTime = result.sunset,
                 sunriseTime = result.sunrise,
                 placeholderVisible = result.isLoading
             )
-           TODO("добавить кастомизацию в рассвет/закат")
 
         }
     }
