@@ -13,13 +13,12 @@ class LocalDataSource(context: Context) {
     private val gson = Gson()
     private val typeToken =
         TypeToken.getParameterized(List::class.java, WeatherResponse::class.java).type
-
     private val fileNameDaily = "weatherDailyData.json"
     private val fileNameWeek = "weatherWeeklyData.json"
     private var weatherDailyData: WeatherResponse? = null
     private var weatherWeeklyData: WeatherWeekly? = null
     val dayData = MutableLiveData(weatherDailyData)
-    val weekData = MutableStateFlow(weatherDailyData)
+    val weekData = MutableStateFlow(weatherWeeklyData)
 
     init {
         val file = context.filesDir.resolve(fileNameDaily)
@@ -30,4 +29,13 @@ class LocalDataSource(context: Context) {
             }
         }
     }
+    init {
+        val file = context.filesDir.resolve(fileNameWeek)
+        if (file.exists()) {
+            context.openFileInput(fileNameWeek).bufferedReader().use {
+                weatherWeeklyData = gson.fromJson(it, typeToken)
+                weekData.value = weatherWeeklyData
+            }
+        }
     }
+}

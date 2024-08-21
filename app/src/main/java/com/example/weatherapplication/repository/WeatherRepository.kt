@@ -15,6 +15,6 @@ class WeatherRepository(
     suspend fun getWeatherCurrent() = remoteDataSource.getWeatherCurrent()
     suspend fun getWeatherWeekly() = remoteDataSource.getWeatherWeekly()
     override fun getCurrentConditions(): MutableLiveData<WeatherResponse?> = localDataSource.dayData
-    //override fun getWeeklyConditions(): MutableStateFlow<WeatherWeekly> = localDataSource.weekData
+    override fun getWeeklyConditions(): MutableStateFlow<WeatherWeekly?> = localDataSource.weekData
 
 }

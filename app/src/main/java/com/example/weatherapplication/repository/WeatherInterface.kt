@@ -8,5 +8,5 @@ import java.util.concurrent.Flow
 
 interface WeatherInterface {
     fun getCurrentConditions(): MutableLiveData<WeatherResponse?>
-    //fun getWeeklyConditions(): MutableStateFlow<WeatherWeekly>
+    fun getWeeklyConditions(): MutableStateFlow<WeatherWeekly?>
 }

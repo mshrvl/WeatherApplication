@@ -100,7 +100,7 @@ fun FirstScreen(
                 sunriseTime = result.sunrise,
                 placeholderVisible = result.isLoading
             )
-           //добавить стрелочки для заката и восхода
+           TODO("добавить кастомизацию в рассвет/закат")
 
         }
     }

@@ -51,7 +51,7 @@ data class Daily(
 
 
 data class WeatherWeekly(
-    val latitude: Double,
+    val latitude: Double?,
     val longitude: Double,
     val daily: List<String>,
     val timezone: String
