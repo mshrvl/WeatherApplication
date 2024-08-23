@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +44,13 @@ fun SecondScreen(
         Text(modifier = Modifier
             .padding(top = 20.dp)
             .align(Alignment.CenterHorizontally), fontSize = 20.sp, text = "10-days forecast")
+        val weatherList = listOf("first", "second")
         LazyRow(horizontalArrangement = Arrangement.spacedBy(4.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
+
+            items(weatherList) { daily ->
+                daily.
+
+            }
             items(1) { days ->
                 DailyCard(
                     daysOfWeek = "WN",

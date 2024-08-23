@@ -35,6 +35,14 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             delay(5000)
             val response = repository.getWeatherWeekly()
             response?.let { response ->
+//                _weeklyData.update {
+//
+//                }
+                
+                
+
+
+
                 //response.weatherHourly
 //                _weeklyData.update {
 //                    it.copy(
