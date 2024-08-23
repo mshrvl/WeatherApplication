@@ -6,6 +6,7 @@ import com.example.weatherapplication.data.entity.rds.RemoteDataSource
 import com.example.weatherapplication.data.entity.rds.WeatherApi
 import com.example.weatherapplication.screens.firstscreen.ViewModelFirstScreen
 import com.example.weatherapplication.repository.WeatherRepository
+import com.example.weatherapplication.screens.secondscreen.SecondScreenViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -33,13 +34,13 @@ val dataModule = module {
 
 val presentationModule = module {
     viewModelOf(::ViewModelFirstScreen)
+    viewModelOf(::SecondScreenViewModel)
 }
 
 class MyApplication() : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         startKoin {
             androidLogger()
             androidContext(this@MyApplication)

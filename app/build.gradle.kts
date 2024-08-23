@@ -69,5 +69,6 @@ dependencies {
     implementation (libs.accompanist.placeholder)
     implementation (libs.kotlinx.datetime)
     implementation (libs.androidx.material)
-
+    implementation(libs.androidx.paging.compose)
+    implementation(platform(libs.androidx.compose.bom.v20240600))
 }

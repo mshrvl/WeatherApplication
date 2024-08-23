@@ -9,21 +9,33 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherapplication.R
+import org.koin.androidx.compose.koinViewModel
 
-@Preview(showBackground = true)
+
+
 @Composable
-fun SecondScreen() {
+fun SecondScreen(
+
+) {
+    val viewModel: SecondScreenViewModel = koinViewModel()
+    val result by viewModel.weeklyData.collectAsState()
+
+
+
+
     Column(modifier = Modifier
         .background(Color.Blue.copy(alpha = 0.4f))
         .fillMaxSize(1f)
@@ -32,12 +44,12 @@ fun SecondScreen() {
             .padding(top = 20.dp)
             .align(Alignment.CenterHorizontally), fontSize = 20.sp, text = "10-days forecast")
         LazyRow(horizontalArrangement = Arrangement.spacedBy(4.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
-            items(10) { days ->
+            items(1) { days ->
                 DailyCard(
                     daysOfWeek = "WN",
                     image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
-                    maxValue = "12",
-                    minValue = "10"
+                    maxValue = result.temperatureMax,
+                    minValue = result.temperatureMin
                 )
             }
         }

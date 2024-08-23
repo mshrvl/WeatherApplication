@@ -31,12 +31,12 @@ class ViewModelFirstScreen(private val repository: WeatherRepository) : ViewMode
             response?.let { response ->
                 _dailyData.update {
                     it.copy(
-                        temperature = response.currentWeather.temperature.toString(),
-                        windSpeed = response.currentWeather.windSpeed.toString(),
-                        pressure = response.currentWeather.surfacePressure.toString(),
-                        dayOrNight = formatDay(response.currentWeather.isDay),
-                        sunrise = response.getFirstDaySunrise()?: "Ошибка данных",
-                        sunset = response.getFirstDaySunset()?: "Ошибка данных",
+                        temperature = response.current?.temperature2m.toString(),
+                        windSpeed = response.current?.windSpeed10m.toString(),
+                        pressure = response.current?.surfacePressure.toString(),
+                        dayOrNight = response.current?.isDay?.let { it1 -> formatDay(it1)}.toString(),
+                        sunrise = formatTime(response.daily?.sunrise?.firstOrNull()?: "")?.getFormattedTime() ?: "Ошибка данных",
+                        sunset = formatTime(response.daily?.sunset?.firstOrNull()?: "")?.getFormattedTime() ?: "Ошибка данных",
                         isLoading = false
                     )
                 }

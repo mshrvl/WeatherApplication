@@ -3,7 +3,6 @@ package com.example.weatherapplication.data.entity.lds
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.weatherapplication.data.entity.entity.WeatherResponse
-import com.example.weatherapplication.data.entity.entity.WeatherWeekly
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +15,7 @@ class LocalDataSource(context: Context) {
     private val fileNameDaily = "weatherDailyData.json"
     private val fileNameWeek = "weatherWeeklyData.json"
     private var weatherDailyData: WeatherResponse? = null
-    private var weatherWeeklyData: WeatherWeekly? = null
+    private var weatherWeeklyData: WeatherResponse? = null
     val dayData = MutableLiveData(weatherDailyData)
     val weekData = MutableStateFlow(weatherWeeklyData)
 
