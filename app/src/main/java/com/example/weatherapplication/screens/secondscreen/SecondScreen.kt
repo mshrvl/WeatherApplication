@@ -26,7 +26,6 @@ import com.example.weatherapplication.R
 import org.koin.androidx.compose.koinViewModel
 
 
-
 @Composable
 fun SecondScreen(
 
@@ -37,21 +36,23 @@ fun SecondScreen(
 
 
 
-    Column(modifier = Modifier
-        .background(Color.Blue.copy(alpha = 0.4f))
-        .fillMaxSize(1f)
-        .statusBarsPadding()) {
-        Text(modifier = Modifier
-            .padding(top = 20.dp)
-            .align(Alignment.CenterHorizontally), fontSize = 20.sp, text = "10-days forecast")
-        val weatherList = listOf("first", "second")
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(4.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
-
-            items(weatherList) { daily ->
-                daily.
-
-            }
-            items(1) { days ->
+    Column(
+        modifier = Modifier
+            .background(Color.Blue.copy(alpha = 0.4f))
+            .fillMaxSize(1f)
+            .statusBarsPadding()
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .align(Alignment.CenterHorizontally), fontSize = 20.sp, text = "10-days forecast"
+        )
+        val dailyList = result.dailyCards
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
+            items(dailyList) {
                 DailyCard(
                     daysOfWeek = "WN",
                     image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
@@ -72,20 +73,24 @@ fun SecondScreen(
             currentWeather = "Cloudy"
         )
         Text(modifier = Modifier.padding(8.dp), text = "Hourly forecast", fontSize = 16.sp)
-            LazyRow(modifier = Modifier.padding(2.dp),horizontalArrangement = Arrangement.spacedBy(4.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
-                items(24) { hourInfo ->
-                    HourlyCard(
-                        modifier = Modifier,
-                        temperature = "12",
-                        rainPercentage = "30",
-                        image = ImageVector.vectorResource(
-                            R.drawable.baseline_cloudy_snowing_24
-                        ),
-                        hour = "9"
-                    )
-
-                }
+        LazyRow(
+            modifier = Modifier.padding(2.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
+            items(24) { hourInfo ->
+                HourlyCard(
+                    modifier = Modifier,
+                    temperature = "12",
+                    rainPercentage = "30",
+                    image = ImageVector.vectorResource(
+                        R.drawable.baseline_cloudy_snowing_24
+                    ),
+                    hour = "9"
+                )
 
             }
+
         }
     }
+}

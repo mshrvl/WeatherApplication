@@ -29,12 +29,12 @@ class RemoteDataSource(private val weatherApi: WeatherApi) {
             longitude = 30.3141,
             timezone = "Europe/Moscow",
             daily = listOf(
-                "time",
+                //"time",
                 "weather_code",
                 "temperature_2m_max",
                 "temperature_2m_min",
                 "precipitation_probability_max"
-            ),
+            )
         )
         if (response.isSuccessful) {
             return response.body()

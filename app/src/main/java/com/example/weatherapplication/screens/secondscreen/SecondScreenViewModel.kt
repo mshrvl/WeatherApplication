@@ -1,11 +1,9 @@
 package com.example.weatherapplication.screens.secondscreen
 
-import android.health.connect.datatypes.units.Percentage
-import android.health.connect.datatypes.units.Temperature
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapplication.repository.WeatherRepository
-import com.example.weatherapplication.screens.firstscreen.FirstScreenState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,13 +32,29 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
         viewModelScope.launch {
             delay(5000)
             val response = repository.getWeatherWeekly()
-            response?.let { response ->
-//                _weeklyData.update {
+            val listDaily = with(response?.daily!!) {
+                time!!.mapIndexed { index, s ->
+                    DailyCard(
+                        date = s!!,
+                        temperatureMax = temperature2mMax!![index]!!.toString(),
+                        temperatureMin = temperature2mMin!![index]!!.toString()
+                    )
+                }
+            }
+            response.let { response ->
+                _weeklyData.update {
+                    it.copy(
+                        time = response.daily?.time.toString(),
+                        temperatureMax = response.daily?.temperature2mMax.toString(),
+                        temperatureMin = response.daily?.temperature2mMin.toString(),
+                        rainPercentage = response.hourly?.precipitationProbability.toString(),
+                        weatherCode = response.daily?.weatherCode.toString(),
+                        dailyCards = listDaily,
+                        isLoading = true
+                    )
+                }
 //
 //                }
-                
-                
-
 
 
                 //response.weatherHourly
@@ -58,22 +72,24 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             }
         }
     }
-    private fun formatWeatherCode(weatherCode: Int) : String {
-        return when (weatherCode) {
-            0 -> "Clear sky"
-            1,2,3 -> "Partly cloudly"
-            45,48 -> "Fog"
-            51,53,55 -> "Drizzle"
-            56,57 -> "Freezing Drizzle"
-            61,63,65 -> "Rain"
-            66,67 -> "Freezing rain"
-            71,73,75 -> "Snow fall"
-            77 -> "Snow grains"
-            80,81,82 -> "Rain showers"
-            85,86 -> "Snow showers"
-            else -> ""
-        }
-    }
+
+//    private fun formatWeatherCode(weatherCode: List<Int>): String {
+//        return when (weatherCode) {
+//            0 -> "Clear sky"
+//            1, 2, 3 -> "Partly cloudly"
+//            45, 48 -> "Fog"
+//            51, 53, 55 -> "Drizzle"
+//            56, 57 -> "Freezing Drizzle"
+//            61, 63, 65 -> "Rain"
+//            66, 67 -> "Freezing rain"
+//            71, 73, 75 -> "Snow fall"
+//            77 -> "Snow grains"
+//            80, 81, 82 -> "Rain showers"
+//            85, 86 -> "Snow showers"
+//            else -> ""
+//        }
+//    }
+
     init {
         getWeeklyData()
     }

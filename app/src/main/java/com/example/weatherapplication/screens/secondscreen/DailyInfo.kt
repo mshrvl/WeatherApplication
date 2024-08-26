@@ -33,7 +33,9 @@ fun DailyInfo(
     currentWeather: String
 ) {
     Row(modifier.background(color = Color.White, shape = RoundedCornerShape(8.dp))) {
-        Column(modifier = Modifier.fillMaxWidth(1f).padding(36.dp)) {
+        Column(modifier = Modifier
+            .fillMaxWidth(1f)
+            .padding(36.dp)) {
             Row {
                 Text(text = "$dayOfWeek,", fontSize = 32.sp)
                 Spacer(modifier = Modifier.padding(horizontal = 4.dp))
@@ -44,7 +46,13 @@ fun DailyInfo(
             Row {
                 Text(text = "$maxTemp°/", fontSize = 40.sp)
                 Text(text = "$minTemp°", fontSize = 40.sp)
-                Image(modifier = Modifier.padding(start = 36.dp).size(48.dp),imageVector = image, contentDescription = null)
+                Image(
+                    modifier = Modifier
+                        .padding(start = 36.dp)
+                        .size(48.dp),
+                    imageVector = image,
+                    contentDescription = null
+                )
             }
             Row {
                 Text(text = currentWeather, fontSize = 36.sp)
@@ -52,16 +60,17 @@ fun DailyInfo(
         }
     }
 }
+
 @Preview
 @Composable
 fun PreviewDailyInfo() {
     WeatherApplicationTheme {
         DailyInfo(
             modifier = Modifier,
-            dayOfWeek = "Sunday" ,
+            dayOfWeek = "Sunday",
             month = "August",
             number = "12",
-            maxTemp ="12",
+            maxTemp = "12",
             minTemp = "9",
             image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
             currentWeather = "Sunny"
