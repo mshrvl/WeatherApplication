@@ -1,5 +1,6 @@
 package com.example.weatherapplication.data.entity.rds
 
+import com.example.weatherapplication.data.entity.entity.Hourly
 import com.example.weatherapplication.data.entity.entity.WeatherResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -21,6 +22,7 @@ interface WeatherApi {
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
         @Query("timezone") timezone: String,
-        @Query("daily") daily:List<String>
+        @Query("daily") daily:List<String>,
+        @Query("hourly") hourly: List<String>
     ):Response<WeatherResponse>
 }

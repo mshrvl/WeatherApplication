@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,46 +38,7 @@ fun Modifier.basePlaceholder(visible: Boolean) = this.placeholder(
     shape = RoundedCornerShape(4.dp)
 )
 
-@Composable
-fun WeatherCard(
-    modifier: Modifier = Modifier,
-    title: String,
-    value: String,
-    supportText: String,
-    image: ImageVector,
-    placeholderVisible: Boolean
 
-    ) {
-
-    Row(
-        modifier = modifier
-            .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
-
-        ) {
-        Column(modifier = Modifier.padding(16.dp).weight(1f)) {
-            Text(text = title)
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                modifier = Modifier.basePlaceholder(placeholderVisible),
-                text = value,
-                fontSize = 25.sp,
-                maxLines = 1
-            )
-            Text(text = supportText)
-        }
-
-        Image(
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(end = 16.dp)
-                .size(48.dp)
-                .aspectRatio(1f),
-            imageVector = image,
-            contentDescription = null
-        )
-
-    }
-}
 
 @Composable
 fun WeatherCard(
@@ -95,7 +57,7 @@ fun WeatherCard(
 
         ) {
         Column(modifier = Modifier.padding(16.dp).weight(1f)) {
-            Text(text = title)
+            Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 modifier = Modifier.basePlaceholder(placeholderVisible),
@@ -119,20 +81,20 @@ fun WeatherCard(
     }
 }
 
-@Preview
-@Composable
-fun WeatherCardPreview() {
-    WeatherApplicationTheme {
-        WeatherCard(
-            modifier = Modifier.size(160.dp),
-            title = "Sunny",
-            value = "15/C",
-            supportText = "Light",
-            image = ImageVector.vectorResource(
-                R.drawable.baseline_sunny_24
-            ),
-            placeholderVisible = true
-
-        )
-    }
-}
+//@Preview
+//@Composable
+//fun WeatherCardPreview() {
+//    WeatherApplicationTheme {
+//        WeatherCard(
+//            modifier = Modifier.size(160.dp),
+//            title = "Temperature",
+//            value = "15/C",
+//            supportText = "Light",
+//            image = ImageVector.vectorResource(
+//                R.drawable.baseline_sunny_24
+//            ),
+//            placeholderVisible = true
+//
+//        )
+//    }
+//}

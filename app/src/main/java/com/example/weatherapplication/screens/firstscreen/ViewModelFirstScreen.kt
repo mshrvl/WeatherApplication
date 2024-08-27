@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 data class FirstScreenState(
     val temperature: String = " ".repeat(15),
@@ -21,7 +22,7 @@ data class FirstScreenState(
 )
 
 class ViewModelFirstScreen(private val repository: WeatherRepository) : ViewModel() {
-    val data = repository.getCurrentConditions()
+   //val data = repository.getCurrentConditions()
     private val _dailyData = MutableStateFlow(FirstScreenState())
     val dailyData = _dailyData.asStateFlow()
     private fun getDailyData() {
@@ -31,9 +32,9 @@ class ViewModelFirstScreen(private val repository: WeatherRepository) : ViewMode
             response?.let { response ->
                 _dailyData.update {
                     it.copy(
-                        temperature = response.current?.temperature2m.toString(),
+                        temperature = response.current?.temperature2m?.roundToInt().toString(),
                         windSpeed = response.current?.windSpeed10m.toString(),
-                        pressure = response.current?.surfacePressure.toString(),
+                        pressure = response.current?.surfacePressure?.roundToInt().toString(),
                         dayOrNight = response.current?.isDay?.let { it1 -> formatDay(it1)}.toString(),
                         sunrise = formatTime(response.daily?.sunrise?.firstOrNull()?: "")?.getFormattedTime() ?: "Ошибка данных",
                         sunset = formatTime(response.daily?.sunset?.firstOrNull()?: "")?.getFormattedTime() ?: "Ошибка данных",

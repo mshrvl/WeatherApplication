@@ -32,8 +32,7 @@ fun SecondScreen(
 ) {
     val viewModel: SecondScreenViewModel = koinViewModel()
     val result by viewModel.weeklyData.collectAsState()
-
-
+    val dailyList = result.dailyCards
 
 
     Column(
@@ -45,9 +44,8 @@ fun SecondScreen(
         Text(
             modifier = Modifier
                 .padding(top = 20.dp)
-                .align(Alignment.CenterHorizontally), fontSize = 20.sp, text = "10-days forecast"
+                .align(Alignment.CenterHorizontally), fontSize = 20.sp, text = "7-days forecast"
         )
-        val dailyList = result.dailyCards
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)
@@ -56,8 +54,9 @@ fun SecondScreen(
                 DailyCard(
                     daysOfWeek = "WN",
                     image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
-                    maxValue = result.temperatureMax,
-                    minValue = result.temperatureMin
+                    maxValue = it.temperatureMax,
+                    minValue = it.temperatureMin,
+                    onClick = {}
                 )
             }
         }

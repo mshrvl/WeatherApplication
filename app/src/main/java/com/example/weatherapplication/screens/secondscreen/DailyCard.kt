@@ -2,6 +2,7 @@ package com.example.weatherapplication.screens.secondscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -22,9 +23,19 @@ import com.example.weatherapplication.ui.theme.WeatherApplicationTheme
 
 
 @Composable
-fun DailyCard(modifier: Modifier = Modifier, daysOfWeek: String, image: ImageVector, maxValue: String, minValue: String) {
+fun DailyCard(
+    modifier: Modifier = Modifier,
+    daysOfWeek: String,
+    image: ImageVector,
+    maxValue: String,
+    minValue: String,
+    onClick: () -> Unit
+) {
     Column(
-        modifier = Modifier.background(color = Color.White, shape = RoundedCornerShape(8.dp)).padding(4.dp),
+        modifier = Modifier
+            .clickable {  }
+            .background(color = Color.White, shape = RoundedCornerShape(8.dp))
+            .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = daysOfWeek, fontSize = 24.sp)
@@ -35,6 +46,7 @@ fun DailyCard(modifier: Modifier = Modifier, daysOfWeek: String, image: ImageVec
         }
     }
 }
+
 @Preview
 @Composable
 fun DailyCardPreview() {
@@ -43,7 +55,8 @@ fun DailyCardPreview() {
             daysOfWeek = "WN",
             image = ImageVector.vectorResource(id = R.drawable.baseline_sunny_24),
             maxValue = "12",
-            minValue = "23"
+            minValue = "23",
+            onClick = {}
         )
     }
 }

@@ -84,7 +84,7 @@ fun FirstScreen(
                 modifier = Modifier
                     .weight(1f)
                     .height(160.dp),
-                title = "Day or Night",
+                title = "Day/Night",
                 value = result.dayOrNight,
                 supportText = "",
                 image = painterResource(id = R.drawable.day_and_night_icon),

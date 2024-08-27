@@ -1,14 +1,18 @@
 package com.example.weatherapplication.screens.secondscreen
 
 
+import android.health.connect.datatypes.units.Temperature
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weatherapplication.repository.WeatherRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 
 data class SecondScreenState(
@@ -18,14 +22,16 @@ data class SecondScreenState(
     val rainPercentage: String = " ",
     val weatherCode: String = " ",
     val dailyCards: List<DailyCard> = listOf(),
+    val hourlyCards: List <HourlyCard> = listOf(),
     val isLoading: Boolean = true
 )
 
 data class DailyCard(val date: String, val temperatureMax: String, val temperatureMin: String)
-
+data class HourlyCard(val hour: String, val hourlyTemperature: String, val probability: String)
 
 class SecondScreenViewModel(private val repository: WeatherRepository) : ViewModel() {
-    val data = repository.getWeeklyConditions()
+    //val data = repository.getWeeklyConditions()
+    val hourlydata = repository.getHourlyConditions()
     private val _weeklyData = MutableStateFlow(SecondScreenState())
     val weeklyData = _weeklyData.asStateFlow()
     private fun getWeeklyData() {
@@ -36,10 +42,13 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
                 time!!.mapIndexed { index, s ->
                     DailyCard(
                         date = s!!,
-                        temperatureMax = temperature2mMax!![index]!!.toString(),
-                        temperatureMin = temperature2mMin!![index]!!.toString()
+                        temperatureMax = temperature2mMax[index]?.roundToInt().toString(),
+                        temperatureMin = temperature2mMin[index]?.roundToInt().toString()
                     )
                 }
+            }
+            val listHourly = with(response.hourly) {
+
             }
             response.let { response ->
                 _weeklyData.update {
@@ -53,23 +62,14 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
                         isLoading = true
                     )
                 }
-//
-//                }
-
-
-                //response.weatherHourly
-//                _weeklyData.update {
-//                    it.copy(
-//                        time = response.weatherHourly.time,
-//                        temperatureMax = response.weatherHourly.temperatureMax.toString(),
-//                        temperatureMin = response.weatherHourly.temperatureMin.toString(),
-//                        rainPercentage = response.weatherHourly.rainProbability.toString(),
-//                        weatherCode = response.weatherHourly.weatherCode.toString(),
-//                        isLoading = false
-//                    )
-//                }
-
             }
+        }
+    }
+    private fun getHourlyData() {
+        viewModelScope.launch {
+            delay(5000)
+            val response = repository.getHourlyConditions()
+            //val listHourly = with()
         }
     }
 
@@ -92,6 +92,10 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
 
     init {
         getWeeklyData()
+    }
+
+    init {
+        getHourlyData()
     }
 }
 
