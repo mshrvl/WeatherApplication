@@ -34,7 +34,7 @@ class RemoteDataSource(private val weatherApi: WeatherApi) {
                 "temperature_2m_min",
                 "precipitation_probability_max"
             ),
-            hourly = listOf("time", "temperature_2m", "precipitation_probability")
+            hourly = listOf("temperature_2m", "precipitation_probability")
         )
         if (response.isSuccessful) {
             return response.body()

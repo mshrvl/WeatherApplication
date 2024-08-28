@@ -117,7 +117,7 @@ data class Hourly(
     @SerializedName("temperature_2m")
     val temperature2m: List<Double?>?,
     @SerializedName("time")
-    val time: List<String?>?,
+    val time: List<String?>,
     @SerializedName("weather_code")
     val weatherCode: List<Int?>?,
     @SerializedName("wind_speed_10m")
@@ -127,15 +127,15 @@ data class Hourly(
 @Keep
 data class HourlyUnits(
     @SerializedName("precipitation_probability")
-    val precipitationProbability: String?,
+    val precipitationProbability: String,
     @SerializedName("surface_pressure")
     val surfacePressure: String?,
     @SerializedName("temperature_2m")
-    val temperature2m: String?,
+    val temperature2m: String,
     @SerializedName("time")
-    val time: String?,
+    val time: String,
     @SerializedName("weather_code")
-    val weatherCode: String?,
+    val weatherCode: String,
     @SerializedName("wind_speed_10m")
     val windSpeed10m: String?
 )

@@ -32,7 +32,9 @@ fun SecondScreen(
 ) {
     val viewModel: SecondScreenViewModel = koinViewModel()
     val result by viewModel.weeklyData.collectAsState()
+
     val dailyList = result.dailyCards
+    val hourlyList = result.hourlyCards
 
 
     Column(
@@ -77,15 +79,15 @@ fun SecondScreen(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            items(24) { hourInfo ->
+            items(hourlyList) {
                 HourlyCard(
                     modifier = Modifier,
-                    temperature = "12",
-                    rainPercentage = "30",
+                    temperature = it.hourlyTemperature ,
+                    rainPercentage = it.probability,
                     image = ImageVector.vectorResource(
                         R.drawable.baseline_cloudy_snowing_24
                     ),
-                    hour = "9"
+                    hour = it.hour
                 )
 
             }

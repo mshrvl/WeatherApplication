@@ -1,11 +1,9 @@
 package com.example.weatherapplication.screens.secondscreen
 
 
-import android.health.connect.datatypes.units.Temperature
-import androidx.compose.ui.graphics.vector.ImageVector
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weatherapplication.repository.WeatherRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +20,7 @@ data class SecondScreenState(
     val rainPercentage: String = " ",
     val weatherCode: String = " ",
     val dailyCards: List<DailyCard> = listOf(),
-    val hourlyCards: List <HourlyCard> = listOf(),
+    val hourlyCards: List<HourlyCard> = listOf(),
     val isLoading: Boolean = true
 )
 
@@ -31,7 +29,9 @@ data class HourlyCard(val hour: String, val hourlyTemperature: String, val proba
 
 class SecondScreenViewModel(private val repository: WeatherRepository) : ViewModel() {
     //val data = repository.getWeeklyConditions()
-    val hourlydata = repository.getHourlyConditions()
+    //val hourlydata = repository.getWeeklyConditions()
+
+    private val _hourlyData = MutableStateFlow(SecondScreenState())
     private val _weeklyData = MutableStateFlow(SecondScreenState())
     val weeklyData = _weeklyData.asStateFlow()
     private fun getWeeklyData() {
@@ -46,9 +46,6 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
                         temperatureMin = temperature2mMin[index]?.roundToInt().toString()
                     )
                 }
-            }
-            val listHourly = with(response.hourly) {
-
             }
             response.let { response ->
                 _weeklyData.update {
@@ -65,30 +62,39 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             }
         }
     }
+
     private fun getHourlyData() {
         viewModelScope.launch {
-            delay(5000)
-            val response = repository.getHourlyConditions()
-            //val listHourly = with()
+//            delay(5000)
+            val response = repository.getWeatherWeekly()
+            val listHourly = with(response?.hourly!!) {
+                time.mapIndexed { index, d ->
+                    Log.d("checkMap", "check: ${d}")
+                    val tmp = HourlyCard(
+                        hour = d!!,
+                        hourlyTemperature = temperature2m?.get(index)?.roundToInt().toString(),
+                        probability = precipitationProbability?.get(index).toString()
+                    )
+                    Log.d("checkMap", "check: ${tmp}")
+
+                    tmp
+                }
+
+            }
+
+            Log.d("checkMaplistHourly", "checkList: ${listHourly}")
+
+
+            response.let { response ->
+                _weeklyData.update {
+                    Log.d("checkMaplistHourly", "update")
+                    it.copy(
+                        hourlyCards = listHourly
+                    )
+                }
+            }
         }
     }
-
-//    private fun formatWeatherCode(weatherCode: List<Int>): String {
-//        return when (weatherCode) {
-//            0 -> "Clear sky"
-//            1, 2, 3 -> "Partly cloudly"
-//            45, 48 -> "Fog"
-//            51, 53, 55 -> "Drizzle"
-//            56, 57 -> "Freezing Drizzle"
-//            61, 63, 65 -> "Rain"
-//            66, 67 -> "Freezing rain"
-//            71, 73, 75 -> "Snow fall"
-//            77 -> "Snow grains"
-//            80, 81, 82 -> "Rain showers"
-//            85, 86 -> "Snow showers"
-//            else -> ""
-//        }
-//    }
 
     init {
         getWeeklyData()
@@ -98,4 +104,22 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
         getHourlyData()
     }
 }
+
+
+    private fun formatWeatherCode(weatherCode: Int): String {
+        return when (weatherCode) {
+            0 -> "Clear sky"
+            1, 2, 3 -> "Partly cloudly"
+            45, 48 -> "Fog"
+            51, 53, 55 -> "Drizzle"
+            56, 57 -> "Freezing Drizzle"
+            61, 63, 65 -> "Rain"
+            66, 67 -> "Freezing rain"
+            71, 73, 75 -> "Snow fall"
+            77 -> "Snow grains"
+            80, 81, 82 -> "Rain showers"
+            85, 86 -> "Snow showers"
+            else -> ""
+        }
+    }
 
