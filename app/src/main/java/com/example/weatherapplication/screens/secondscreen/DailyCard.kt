@@ -32,9 +32,9 @@ fun DailyCard(
     onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .clickable {  }
+        modifier = modifier
             .background(color = Color.White, shape = RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick)
             .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -57,6 +57,7 @@ fun DailyCardPreview() {
             maxValue = "12",
             minValue = "23",
             onClick = {}
+            //onClick = { Unit }
         )
     }
 }

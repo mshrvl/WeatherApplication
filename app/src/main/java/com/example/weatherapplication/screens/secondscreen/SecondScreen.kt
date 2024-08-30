@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,16 +26,11 @@ import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun SecondScreen(
-
-) {
+fun SecondScreen() {
     val viewModel: SecondScreenViewModel = koinViewModel()
-    val result by viewModel.weeklyData.collectAsState()
-
-    val dailyList = result.dailyCards
-    val hourlyList = result.hourlyCards
-
-
+    val state by viewModel.state.collectAsState()
+    val dailyList = state.dailyCards
+    val hourlyList = state.hourlyCards
     Column(
         modifier = Modifier
             .background(Color.Blue.copy(alpha = 0.4f))
@@ -54,18 +48,20 @@ fun SecondScreen(
         ) {
             items(dailyList) {
                 DailyCard(
-                    daysOfWeek = "WN",
+                    daysOfWeek = it.date,
                     image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
                     maxValue = it.temperatureMax,
                     minValue = it.temperatureMin,
-                    onClick = {}
+                    onClick = {
+                        viewModel.selectDay(it.date)
+                    }
                 )
             }
         }
         Spacer(modifier = Modifier.padding(4.dp))
         DailyInfo(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-            dayOfWeek = "Sunday",
+            dayOfWeek = state.selectedDay,
             month = "August",
             number = "11",
             maxTemp = "21",
@@ -82,7 +78,7 @@ fun SecondScreen(
             items(hourlyList) {
                 HourlyCard(
                     modifier = Modifier,
-                    temperature = it.hourlyTemperature ,
+                    temperature = it.hourlyTemperature,
                     rainPercentage = it.probability,
                     image = ImageVector.vectorResource(
                         R.drawable.baseline_cloudy_snowing_24
