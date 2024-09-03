@@ -1,26 +1,21 @@
 package com.example.weatherapplication.screens.secondscreen
 
 
-import android.text.format.DateUtils
-import android.util.Log
+import android.service.notification.Condition
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapplication.repository.WeatherRepository
 import com.example.weatherapplication.screens.firstscreen.areDatesSameDay
 import com.example.weatherapplication.screens.firstscreen.formateDate
 import com.example.weatherapplication.screens.firstscreen.formateDateToMonthAndDay
+import com.example.weatherapplication.screens.firstscreen.getFormattedDate
 import com.example.weatherapplication.screens.firstscreen.getFormattedTime
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
 import kotlin.math.roundToInt
 
 
@@ -32,7 +27,10 @@ data class SecondScreenState(
     val weatherCode: String = " ",
     val dailyCards: List<DailyCard> = listOf(),
     val hourlyCards: List<HourlyCard> = listOf(),
-    val selectedDay: String = "abc",
+    val selectedDay: String = " ",
+    val selectedTempMin: String = " ",
+    val selectedTempMax: String = " ",
+    val weatherCondition: String = " ",
     val isLoading: Boolean = true
 )
 
@@ -46,12 +44,9 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
     private val _uiState = MutableStateFlow(SecondScreenState())
     val state = _uiState.asStateFlow()
 
-    fun selectDay(date: String) {
-
-        // TODO: обновить состояние краточки
-        // TODO: обновить состояние листа погоды по часам
+    fun selectDay(date: String, maxTemp: String, minTemp: String) {
         _uiState.update {
-            it.copy(selectedDay = date)
+            it.copy(selectedDay = date, selectedTempMin = minTemp, selectedTempMax = maxTemp)
         }
         getHourlyData(date)
     }
@@ -93,7 +88,6 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             val response = repository.getWeatherWeekly()
             val listHourly = with(response?.hourly!!) {
                 time.mapIndexed { index, d ->
-                    Log.d("checkMap", "check: ${d}")
                     val date = formateDate(d!!)!!
                     if (areDatesSameDay(selectedDayDate, date)) {
                         HourlyCard(
@@ -106,9 +100,7 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             }
 
             response.let { response ->
-
                 _uiState.update {
-                    Log.d("checkMaplistHourly", "update")
                     it.copy(
                         hourlyCards = listHourly
                     )
@@ -116,13 +108,10 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             }
         }
     }
-
     init {
         getWeeklyData()
         getHourlyData()
-
     }
-
 }
 
 

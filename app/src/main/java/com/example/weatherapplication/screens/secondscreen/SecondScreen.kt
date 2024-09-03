@@ -53,7 +53,7 @@ fun SecondScreen() {
                     maxValue = it.temperatureMax,
                     minValue = it.temperatureMin,
                     onClick = {
-                        viewModel.selectDay(it.date)
+                        viewModel.selectDay(it.date, it.temperatureMax,it.temperatureMin)
                     }
                 )
             }
@@ -62,10 +62,10 @@ fun SecondScreen() {
         DailyInfo(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp),
             dayOfWeek = state.selectedDay,
-            month = "August",
-            number = "11",
-            maxTemp = "21",
-            minTemp = "7",
+            month = "",
+            number = "",
+            maxTemp = state.selectedTempMax,
+            minTemp = state.selectedTempMin,
             image = ImageVector.vectorResource(R.drawable.baseline_cloudy_snowing_24),
             currentWeather = "Cloudy"
         )
