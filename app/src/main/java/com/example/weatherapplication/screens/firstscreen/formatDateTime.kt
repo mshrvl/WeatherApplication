@@ -19,7 +19,7 @@ fun formateDate(dateTimeString: String): Date? {
 }
 
 fun formateDateToMonthAndDay(date: Date): String? {
-    val stf = SimpleDateFormat("MM-dd HH:mm")
+    val stf = SimpleDateFormat("HH:mm")
     return stf.format(date)
 }
 
@@ -37,3 +37,5 @@ fun areDatesSameDay(date1: Date, date2: Date): Boolean {
     val sdf = SimpleDateFormat("yyyy-MM-dd")
     return sdf.format(date1) == sdf.format(date2)
 }
+
+

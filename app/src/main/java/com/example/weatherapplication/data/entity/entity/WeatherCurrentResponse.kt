@@ -87,7 +87,7 @@ data class Daily(
     @SerializedName("time")
     val time: List<String?>?,
     @SerializedName("weather_code")
-    val weatherCode: List<Int?>?
+    val weatherCode: List<Int?>
 )
 
 @Keep

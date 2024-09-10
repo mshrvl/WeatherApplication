@@ -31,7 +31,7 @@ fun HourlyCard(
         Text(text = "$temperature°", fontSize = 24.sp)
         Text(text = "$rainPercentage%",fontSize = 16.sp)
         Image(imageVector = image, contentDescription = null)
-        Text(text = "$hour PM",fontSize = 24.sp)
+        Text(text = hour,fontSize = 24.sp)
     }
 
 }

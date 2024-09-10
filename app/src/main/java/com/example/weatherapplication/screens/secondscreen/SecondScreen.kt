@@ -28,7 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SecondScreen() {
     val viewModel: SecondScreenViewModel = koinViewModel()
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsState() // ладно)
     val dailyList = state.dailyCards
     val hourlyList = state.hourlyCards
     Column(
@@ -53,7 +53,7 @@ fun SecondScreen() {
                     maxValue = it.temperatureMax,
                     minValue = it.temperatureMin,
                     onClick = {
-                        viewModel.selectDay(it.date, it.temperatureMax,it.temperatureMin)
+                        viewModel.selectDay(it.date, it.temperatureMax, it.temperatureMin, it.currentCondition)
                     }
                 )
             }
@@ -67,7 +67,7 @@ fun SecondScreen() {
             maxTemp = state.selectedTempMax,
             minTemp = state.selectedTempMin,
             image = ImageVector.vectorResource(R.drawable.baseline_cloudy_snowing_24),
-            currentWeather = "Cloudy"
+            currentWeather = state.weatherCondition
         )
         Text(modifier = Modifier.padding(8.dp), text = "Hourly forecast", fontSize = 16.sp)
         LazyRow(
