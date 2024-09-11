@@ -25,9 +25,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FirstScreen(
-    viewModel: ViewModelFirstScreen = koinViewModel()
 ) {
+    val viewModel: ViewModelFirstScreen = koinViewModel()
     val result by viewModel.dailyData.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -83,7 +84,7 @@ fun FirstScreen(
                 modifier = Modifier
                     .weight(1f)
                     .height(160.dp),
-                title = "Day or Night",
+                title = "Day/Night",
                 value = result.dayOrNight,
                 supportText = "",
                 image = painterResource(id = R.drawable.day_and_night_icon),
@@ -94,12 +95,11 @@ fun FirstScreen(
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             WeatherBigCard(
                 title = "Sunrise & sunset",
-                image = ImageVector.vectorResource(R.drawable.sunrise_icon),
+                image = ImageVector.vectorResource(R.drawable.sunset_6wykko949zcr),
                 sunsetTime = result.sunset,
                 sunriseTime = result.sunrise,
                 placeholderVisible = result.isLoading
             )
-            Spacer(modifier = Modifier.padding(4.dp))
 
         }
     }

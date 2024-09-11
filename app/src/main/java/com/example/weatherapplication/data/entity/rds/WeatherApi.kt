@@ -15,4 +15,13 @@ interface WeatherApi {
         @Query("timezone") timezone: String,
         @Query("daily") daily:List<String>
     ):Response<WeatherResponse>
+
+    @GET("https://api.open-meteo.com/v1/forecast")
+    suspend fun getWeatherWeekly(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double,
+        @Query("timezone") timezone: String,
+        @Query("daily") daily:List<String>,
+        @Query("hourly") hourly: List<String>
+    ):Response<WeatherResponse>
 }

@@ -1,16 +1,15 @@
 package com.example.weatherapplication.screens.firstscreen
 
 
-import android.health.connect.datatypes.units.Temperature
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapplication.data.entity.entity.WeatherResponse
+import com.example.weatherapplication.repository.WeatherRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 data class FirstScreenState(
     val temperature: String = " ".repeat(15),
@@ -23,7 +22,7 @@ data class FirstScreenState(
 )
 
 class ViewModelFirstScreen(private val repository: WeatherRepository) : ViewModel() {
-    val data = repository.getCurrentConditions()
+   //val data = repository.getCurrentConditions()
     private val _dailyData = MutableStateFlow(FirstScreenState())
     val dailyData = _dailyData.asStateFlow()
     private fun getDailyData() {
@@ -33,12 +32,12 @@ class ViewModelFirstScreen(private val repository: WeatherRepository) : ViewMode
             response?.let { response ->
                 _dailyData.update {
                     it.copy(
-                        temperature = response.currentWeather.temperature.toString(),
-                        windSpeed = response.currentWeather.windSpeed.toString(),
-                        pressure = response.currentWeather.surfacePressure.toString(),
-                        dayOrNight = formatDay(response.currentWeather.isDay),
-                        sunrise = response.getFirstDaySunrise()?: "Ошибка данных",
-                        sunset = response.getFirstDaySunset()?: "Ошибка данных",
+                        temperature = response.current?.temperature2m?.roundToInt().toString(),
+                        windSpeed = response.current?.windSpeed10m.toString(),
+                        pressure = response.current?.surfacePressure?.roundToInt().toString(),
+                        dayOrNight = response.current?.isDay?.let { it1 -> formatDay(it1)}.toString(),
+                        sunrise = formatTime(response.daily?.sunrise?.firstOrNull()?: "")?.getFormattedTime() ?: "Ошибка данных",
+                        sunset = formatTime(response.daily?.sunset?.firstOrNull()?: "")?.getFormattedTime() ?: "Ошибка данных",
                         isLoading = false
                     )
                 }

@@ -22,4 +22,24 @@ class RemoteDataSource(private val weatherApi: WeatherApi) {
         }
         return null
     }
+
+    suspend fun getWeatherWeekly(): WeatherResponse? {
+        val response = weatherApi.getWeatherWeekly(
+            latitude = 59.9386,
+            longitude = 30.3141,
+            timezone = "Europe/Moscow",
+            daily = listOf(
+                "weather_code",
+                "temperature_2m_max",
+                "temperature_2m_min",
+                "precipitation_probability_max"
+            ),
+            hourly = listOf("temperature_2m", "precipitation_probability")
+        )
+        if (response.isSuccessful) {
+            return response.body()
+        }
+        return null
+
+    }
 }
