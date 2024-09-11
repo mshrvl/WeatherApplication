@@ -48,7 +48,7 @@ fun SecondScreen() {
         ) {
             items(dailyList) {
                 DailyCard(
-                    daysOfWeek = it.date,
+                    daysOfWeek = it.date.toString(),
                     image = ImageVector.vectorResource(R.drawable.baseline_sunny_24),
                     maxValue = it.temperatureMax,
                     minValue = it.temperatureMin,

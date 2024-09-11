@@ -2,15 +2,14 @@ package com.example.weatherapplication.screens.secondscreen
 
 
 import android.service.notification.Condition
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapplication.data.entity.entity.Current
 import com.example.weatherapplication.repository.WeatherRepository
 import com.example.weatherapplication.screens.firstscreen.areDatesSameDay
-import com.example.weatherapplication.screens.firstscreen.formatTime
 import com.example.weatherapplication.screens.firstscreen.formateDate
+import com.example.weatherapplication.screens.firstscreen.formateDateToHour
 import com.example.weatherapplication.screens.firstscreen.formateDateToMonthAndDay
-import com.example.weatherapplication.screens.firstscreen.getFormattedDate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,7 +34,7 @@ data class SecondScreenState(
     val isLoading: Boolean = true
 )
 
-data class DailyCard(val date: String, val temperatureMax: String, val temperatureMin: String,  val currentCondition: String)
+data class DailyCard(val date: String, val temperatureMax: String, val temperatureMin: String, val currentCondition: String)
 data class HourlyCard(val hour: String, val hourlyTemperature: String, val probability: String)
 
 class SecondScreenViewModel(private val repository: WeatherRepository) : ViewModel() {
@@ -57,9 +56,9 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             delay(5000)
             val response = repository.getWeatherWeekly()
             val listDaily = with(response?.daily!!) {
-                time!!.mapIndexed { index, s ->
+                time!!.mapIndexed { index, date ->
                     DailyCard(
-                        date = formatTime(s!!)!!.getFormattedDate(),
+                        date = date!!,
                         temperatureMax = temperature2mMax[index]?.roundToInt().toString(),
                         temperatureMin = temperature2mMin[index]?.roundToInt().toString(),
                         currentCondition = formatWeatherCode(weatherCode[index])
@@ -67,7 +66,7 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
                 }
             }
             response.let { response ->
-                _uiState.update {
+                _uiState.update{
                     it.copy(
                         time = response.daily?.time.toString(),
                         temperatureMax = response.daily?.temperature2mMax.toString(),
@@ -81,6 +80,7 @@ class SecondScreenViewModel(private val repository: WeatherRepository) : ViewMod
             }
         }
     }
+
 
     fun getHourlyData(selectedDay: String = "2024-08-30") {
         val stf = SimpleDateFormat("yyyy-MM-dd")

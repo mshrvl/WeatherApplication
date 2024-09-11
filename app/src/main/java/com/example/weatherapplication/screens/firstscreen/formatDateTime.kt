@@ -3,7 +3,6 @@ package com.example.weatherapplication.screens.firstscreen
 import java.text.SimpleDateFormat
 import java.util.Date
 
-
 fun formatTime(dateTimeString: String): Date? {
     try {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
@@ -18,8 +17,14 @@ fun formateDate(dateTimeString: String): Date? {
     return stf.parse(dateTimeString)
 }
 
+
 fun formateDateToMonthAndDay(date: Date): String? {
     val stf = SimpleDateFormat("HH:mm")
+    return stf.format(date)
+}
+
+fun formateDateToHour(date: Date?): String? {
+    val stf = SimpleDateFormat("dd:mm")
     return stf.format(date)
 }
 
@@ -28,7 +33,7 @@ fun Date.getFormattedTime(): String {
     return sdf.format(this)
 }
 
-fun Date.getFormattedDate(): String {
+fun Date.getFormattedDate(dateTimeString: String): String? {
     val stf = SimpleDateFormat("MM:dd".reversed())
     return stf.format(this)
 }
