@@ -22,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.weatherapplication.screens.firstscreen.FirstScreen
 import com.example.weatherapplication.screens.secondscreen.SecondScreen
+import com.example.weatherapplication.screens.thirdscreen.SearchScreen
 
 sealed class Screen(val route: String, val title: String) {
     object Current : Screen("current", "Текущая")
@@ -77,6 +78,9 @@ fun MainNavHost() {
             }
             composable(Screen.Weekly.route){
                 SecondScreen()
+            }
+            composable(Screen.Search.route){
+                SearchScreen()
             }
         }
     }
